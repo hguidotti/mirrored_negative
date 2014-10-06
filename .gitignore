@@ -1,2 +1,57 @@
 *.pyc
 *.class
+
+file = pickAFile()
+pic = makePicture(file)
+
+# This function will turn the picture negative
+def negative():
+  for px in getPixels(pic):
+    # This will get all the red pixels
+    red=getRed(px)
+    # This will get all the green pixels
+    green=getGreen(px)
+    # This will get all the blue pixels
+    blue=getBlue(px)
+    # After grabbing all the pixels from the
+    # picture, this will make the color of the
+    # photo negative.
+    # The picture is made negative by taking the max
+    # values of RBG (255) and subtracting the red, green,
+    # and blue from the picture.
+    negColor=makeColor( 255-red, 255-green, 255-blue)
+    # This will set the color of the pixels in the picture
+    # to the negative versions of themselves.
+    setColor(px,negColor)
+  repaint(pic)
+  
+  
+# This function will mirror the picture horizonally
+def mirrorHorizontal():
+  for px in getPixels(pic):
+    # Gets the height of the picture, then divides
+    # it by 2 to get the horizonal mirror effect I want.
+    mirrorPoint = getHeight(pic) / 2
+    # Sets the height to pic
+    height = getHeight(pic)
+  # For x in the range of the width of the picture...
+  for x in range(0,getWidth(pic)):
+    # For y in the range of the new height of the picture...
+    for y in range(0,mirrorPoint):
+      # Find the left pixel
+      topPixel = getPixel(pic,x,y)
+      # Find the right pixel
+      bottomPixel = getPixel(pic,x,height - y - 1)
+      # This will get the top left pixel and extract the color
+      # from it. Then later return the color of that pixel
+      color = getColor(topPixel)
+      # Gets the pixel you want to change the color of.
+      # Then it will set the pixel to the given color.
+      setColor(bottomPixel,color)
+  repaint(pic)
+  
+def main():
+  negative()
+  mirrorHorizontal()
+  
+main()
